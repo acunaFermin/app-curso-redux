@@ -17,6 +17,11 @@ import * as authActions from '../auth/auth.actions';
 export class AuthService {
 
   userSubscription!: Subscription;
+  private _user!: Usuario;
+
+  get user() {
+    return {... this._user};
+  }
 
   constructor(
     public fireAuth: AngularFireAuth,
@@ -34,6 +39,7 @@ export class AuthService {
         .subscribe( (fireStoreUser) => {
 
           const user = Usuario.fromFireStore( fireStoreUser! );
+          this._user = user;
           this.store.dispatch( authActions.setUser({ user }) );
 
         } )
