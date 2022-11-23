@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { AppState } from '../app.reducer';
+import * as ingresoEgreso from '../ingreso-egreso/ingreso-egreso.actions';
 import { IngresoEgresoService } from '../services/ingreso-egreso.service';
 
 @Component({
@@ -15,6 +16,7 @@ import { IngresoEgresoService } from '../services/ingreso-egreso.service';
 export class DashboardComponent implements OnDestroy {
 
   storeSubscription!: Subscription;
+  ingEgSubs!: Subscription;
 
   constructor( 
     private store: Store<AppState>,
@@ -25,12 +27,18 @@ export class DashboardComponent implements OnDestroy {
     .pipe(
       filter( user => user.user !== null )
     )
-    .subscribe(user => {
-      this.ingresoEgresoService.initIngresosEgresosListener( user.user?.uid! )
+    .subscribe( ({ user }) => {
+      this.ingEgSubs = this.ingresoEgresoService.initIngresosEgresosListener( user?.uid! )
+      .subscribe(firestoreItems => {
+
+        this.store.dispatch( ingresoEgreso.setItems({ items: firestoreItems }) )
+
+      })
     })
   }
 
   ngOnDestroy() {
     this.storeSubscription.unsubscribe();
+    this.ingEgSubs.unsubscribe();
   }
 }
