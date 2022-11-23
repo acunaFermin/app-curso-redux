@@ -17,7 +17,7 @@ const _uiReducer = createReducer(initialState ,
 );
 
 
-//OJO con el undefined "state:State | undefined", si no esta provoca un error de typescript
+//OJO con el undefined "state:State | undefined", si no está provoca un error de typescript
 export function uiReducer(state:State | undefined, action:Action): State{
     return _uiReducer(state, action);
 }
