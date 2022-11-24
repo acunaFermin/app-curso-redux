@@ -9,6 +9,7 @@ import { FirestoreUser, Usuario } from '../models/usuario.models';
 import { Store } from '@ngrx/store';
 import { AppState } from '../app.reducer';
 import * as authActions from '../auth/auth.actions';
+import * as ingresoEgreso from '../ingreso-egreso/ingreso-egreso.actions';
 
 
 @Injectable({
@@ -46,7 +47,9 @@ export class AuthService {
       }else{
 
         this.userSubscription?.unsubscribe();
+        this.store.dispatch( ingresoEgreso.unSetItems() );
         this.store.dispatch( authActions.unSetUser() );
+
 
       }
     })

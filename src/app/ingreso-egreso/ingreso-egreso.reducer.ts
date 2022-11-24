@@ -1,9 +1,10 @@
 import { createReducer, on, Action } from '@ngrx/store';
 import { IngresoEgreso } from '../models/ingreso-egreso.models';
+import { IngresoEgresoUID } from './detalle/detalle.component';
 import { setItems, unSetItems } from './ingreso-egreso.actions';
 
 export interface State {
-    items: IngresoEgreso[]; 
+    items: IngresoEgresoUID[]; 
 }
 
 export const initialState: State = {

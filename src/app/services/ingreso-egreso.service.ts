@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { map, tap } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
+import { IngresoEgresoUID } from '../ingreso-egreso/detalle/detalle.component';
 import { IngresoEgreso } from '../models/ingreso-egreso.models';
 import { AuthService } from './auth.service';
 
@@ -18,7 +19,6 @@ export class IngresoEgresoService {
   crearIngresoEgreso(ingresoEgreso: IngresoEgreso){
 
     let uid = this.authService.user.uid;
-    console.log({uid})
 
     return this.fireStore.doc(`${ uid }/ingresos-egresos`)
         .collection('items')
@@ -27,7 +27,7 @@ export class IngresoEgresoService {
         .catch(err => console.warn('error', err))
   }
   
-  initIngresosEgresosListener( uid:string ){
+  initIngresosEgresosListener( uid:string ): Observable<IngresoEgresoUID[]> {
     return this.fireStore.collection(`${ uid }/ingresos-egresos/items`)
     .snapshotChanges()
     .pipe(
@@ -36,6 +36,12 @@ export class IngresoEgresoService {
         ...item.payload.doc.data() as IngresoEgreso
       })))
     )
+  }
+
+  borrarItem(itemUID:string){
+    let uid = this.authService.user.uid;
+    
+    return this.fireStore.doc(`${ uid }/ingresos-egresos/items/${ itemUID }`).delete();
   }
 
 }
