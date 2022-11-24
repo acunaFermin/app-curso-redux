@@ -15,7 +15,7 @@
               </thead>
 
               <tbody>
-                <tr *ngFor="let item of ingresosEgresos">
+                <tr *ngFor="let item of ingresosEgresos | ingresoEgreso">
                   <td>{{item.descripcion}}</td>
                   <td>{{item.monto | currency}}</td>
                   <td>
