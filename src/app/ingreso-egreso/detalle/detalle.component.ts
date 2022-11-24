@@ -1,9 +1,9 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { AppState } from 'src/app/app.reducer';
 import { IngresoEgreso } from 'src/app/models/ingreso-egreso.models';
 import { IngresoEgresoService } from 'src/app/services/ingreso-egreso.service';
+import { AppStateWithIngresoEgr } from '../ingreso-egreso.reducer';
 
 export interface IngresoEgresoUID extends IngresoEgreso {
   uid:string,
@@ -19,7 +19,7 @@ export class DetalleComponent implements OnDestroy {
   storeSubs!:Subscription;
 
   constructor( 
-    private store:Store<AppState>,
+    private store:Store<AppStateWithIngresoEgr>,
     private ingresoEgresoService: IngresoEgresoService 
   ){
     this.storeSubs = this.store.select('ingresoEgreso')

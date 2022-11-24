@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/
 
 //ngrx
 import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/app.reducer';
+import { AppStateWithIngresoEgr } from '../ingreso-egreso.reducer';
 
 //ng-charts
 import { ChartData, ChartEvent } from 'chart.js';
@@ -42,7 +42,7 @@ export class EstadisticaComponent {
     console.log(event, active);
   }
 
-  constructor( private store:Store<AppState>, private ref: ChangeDetectorRef ){
+  constructor( private store:Store<AppStateWithIngresoEgr>, private ref: ChangeDetectorRef ){
 
     this.store.select('ingresoEgreso').subscribe(({items}) => {
       this.totalEgreso = 0;
