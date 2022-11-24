@@ -32,6 +32,9 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { IngresoEgresoPipe } from './pipes/ingreso-egreso.pipe';
 
+//ng-chart
+import { NgChartsModule } from 'ng2-charts';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,6 +59,7 @@ import { IngresoEgresoPipe } from './pipes/ingreso-egreso.pipe';
     AngularFireAuthModule,
     StoreModule.forRoot( appReducers ),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    NgChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
